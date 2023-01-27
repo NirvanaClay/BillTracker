@@ -1,0 +1,15 @@
+.navbar {
+  padding: 0 20px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.navbar ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar a {
+  color: white;
+  font-size: 1.4rem;
+}

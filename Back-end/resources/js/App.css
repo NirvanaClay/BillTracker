@@ -1,0 +1,218 @@
+body{
+  background: linear-gradient(to right, #0400ff, #00ccff);
+  font-family: Arial, sans-serif;
+}
+
+.list{
+  max-width: 500px;
+  margin: 0 auto;
+  padding-top: 25px;
+}
+
+.list h1{
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.app-description{
+  width: 80%;
+  margin: 0 auto 20px auto;
+  font-size: 1.2rem;
+  color: white;
+  text-align: center;
+}
+
+.guest-message{
+  text-align: center;
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 10px;
+
+}
+
+.guest-message a{
+  color:#000000;
+}
+
+.items-container{
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex; 
+  flex-wrap: wrap;
+  justify-content: space-between; 
+  align-items: center;
+  border-top: 2px solid #353131;
+}
+
+.no-expenses{
+  border-top: none;
+}
+
+.items-container ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-container {
+  display: flex;
+  max-width: 80%;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.form-container form {
+  display: flex;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.items-container .total-expenses{
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.error-message {
+  margin-top: 10px;
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.item-container {
+  width: 100%;
+  padding: 5px 0;
+  border-bottom: 2px solid #353131;
+}
+
+.item-container p {
+  font-size: 1.4rem;
+}
+
+.item-text {
+  flex: 6;
+}
+
+.item-price {
+  flex: 1; 
+}
+
+.delete-icon {
+  text-align: right;
+  font-size: 28px;
+  color: red;
+  flex: .5;
+  cursor: pointer;
+}
+
+.price-container::before {
+  content: "$";
+  font-size: 1.4rem;
+  margin-right: 0.2rem;
+}
+
+.price-container{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 30%;
+}
+
+.form-container input[type="number"] {
+  display: block;
+}
+
+input:focus {
+  box-shadow: 0 0 10px #f24c4c;
+  transition: all 0.2s ease-in-out;
+}
+
+.submit-btn {
+  width: 140px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin: 10px auto;
+}
+
+.logout-btn{
+  width: 140px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  background-color: #574c4c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin: 10px auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .list{
+    padding: 25px 10px 0 10px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .list{
+    padding-top: 10px;
+  }
+  .form-container{
+    display: flex;
+  }
+  .submit-btn{
+    display: block;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .form-container{
+    display: block;
+  }
+  .item-text{
+    width: 100%;
+  }
+  .item-amount{
+    width: 100%;
+    margin-top: 10px;
+  }
+  .submit-btn{
+    display: block;
+    width: 120px;
+    height: 45px;
+  }
+  .logout-btn{
+    width: 120px;
+    height: 45px;
+  }
+}
