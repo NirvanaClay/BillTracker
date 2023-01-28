@@ -8,7 +8,7 @@ export default defineConfig({
         react(),
     ],
     build: {
-        target: 'exnext'
+        target: 'esnext'
     }
     // plugins: [
     //     laravel([
