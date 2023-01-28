@@ -6,7 +6,10 @@ export default defineConfig({
     plugins: [
         laravel(['resources/js/app.jsx']),
         react(),
-    ]
+    ],
+    build: {
+        target: 'exnext'
+    }
     // plugins: [
     //     laravel([
     //         'resources/js/app.jsx',
