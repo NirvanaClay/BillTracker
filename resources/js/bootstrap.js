@@ -10,10 +10,10 @@ window._ = import('lodash');
  */
 
 // const axios = await import('axios')
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
-const csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
-axios.defaults.headers.common['X-CSRF-TOKEN'] = csrf_token;
+// const csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
+// axios.defaults.headers.common['X-CSRF-TOKEN'] = csrf_token;
 
 // console.log(csrf_token)
 // axios.defaults.headers.common['X-CSRF-TOKEN'] = csrf_token;
