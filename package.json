@@ -26,6 +26,7 @@
     "dependencies": {
         "js-cookie": "^3.0.1",
         "laravel-mix-react": "^1.0.1",
+        "node": "^18.13.0",
         "react-router-dom": "^6.7.0"
     }
 }
