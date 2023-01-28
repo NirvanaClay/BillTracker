@@ -21,7 +21,7 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
       axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
       console.log("Setting loginStatus to true from register.")
       setLoginStatus(true)
-      navigate('/', { replace: true });
+      navigate('/', { replace: true })
     })
   }
 
