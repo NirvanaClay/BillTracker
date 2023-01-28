@@ -29,15 +29,14 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
 
   return (
     <div className='login-container'>
-      <form className="login-form" onSubmit={handleLogin} autocomplete='off'>
+      <form className="login-form" onSubmit={handleLogin}>
         <div className='login-field'>
           <label htmlFor='email'>Email:</label>
-          <input type='email' id='email' onChange={e => setEmail(e.target.value)} placeholder='Enter your email' autocapitalize="off" autocomplete="off" autocorrect="off" autofocus="" role="combobox" spellcheck="false"
-          />
+          <input type='email' id='email' onChange={e => setEmail(e.target.value)} placeholder='Enter your email' required />
         </div>
         <div className='login-field'>
           <label htmlFor='password'>Password:</label>
-          <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='Enter your password' autocapitalize="off" autocomplete="off" autocorrect="off" autofocus="" role="combobox" spellcheck="false"/>
+          <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='Enter your password' required />
         </div>
         <button type='submit'>Login</button>
       </form>

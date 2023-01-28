@@ -31,6 +31,7 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
         <div className='register-field'>
           <label htmlFor='email'>
             Email:
+          </label>
             <input 
               type="email" 
               name='email'
@@ -38,11 +39,9 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
               onChange={e => setEmail(e.target.value)} 
               required 
             />
-          </label>
         </div>
         <div className='register-field'>
-          <label htmlFor='password'>
-            Password:
+          <label htmlFor='password'>Password:</label>
             <input 
               type="password" 
               name='password'
@@ -50,11 +49,11 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
               onChange={e => setPassword(e.target.value)} 
               required 
             />
-          </label>
         </div>
         <div className='register-field'>
           <label htmlFor='password_confirmation'>
             Confirm Password:
+          </label>
             <input 
               type="password" 
               name='password_confirmation'
@@ -62,7 +61,6 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
               onChange={e => setPasswordConfirmation(e.target.value)} 
               required 
             />
-          </label>
         </div>
         <button type="submit">Register</button>
       </form>
