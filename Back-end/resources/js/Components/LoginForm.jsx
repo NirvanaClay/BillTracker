@@ -23,7 +23,7 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
       console.log("About to set loginStatus to true.")
       setLoginStatus(true)
       setCsrfToken(e.data)
-      navigate('/', { replace: true });
+      navigate('/', { replace: true })
     })
   }
 
