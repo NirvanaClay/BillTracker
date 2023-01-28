@@ -10,7 +10,7 @@ function Main() {
   const [items, setItems] = useState([]);
   const [newItemText, setNewItemText] = useState("");
   const [newItemPrice, setNewItemPrice] = useState("");
-  const [formError, setFormError] = useState(null);
+  const [formError, setFormError] = useState(null)
 
   const addItem = (e) => {
     e.preventDefault()
