@@ -9,7 +9,7 @@ window._ = import('lodash');
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-const axios = await import('axios')
+// const axios = await import('axios')
 axios.defaults.withCredentials = true;
 
 const csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
