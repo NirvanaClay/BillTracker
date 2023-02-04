@@ -57,32 +57,11 @@ body{
   padding: 0;
 }
 
-.list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.form-container {
-  display: flex;
-  max-width: 80%;
-  margin: 0 auto;
-  justify-content: center;
-}
-
 .form-container form {
   display: flex;
+  justify-content: center;
   max-width: 100%;
   margin: 0 auto;
-}
-
-.items-container .total-expenses{
-  width: 100%;
-  padding: 15px 0;
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #ffffff;
 }
 
 .error-message {
@@ -92,9 +71,56 @@ body{
   text-align: center;
 }
 
+.addExpense-form .item-text {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 50px;
+}
+
+.addExpense-form .item-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
+
+.amount-container::before {
+  content: "$";
+  font-size: 1.4rem;
+  margin: 0 2px;
+  /* margin-right: 0.2rem; */
+}
+
+.amount-container{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* width: 40%; */
+}
+
+.submit-btn {
+  width: 100px;
+  height: 50px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
 .item-container {
   width: 100%;
-  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  /* display: grid;
+  grid-template-columns: 40% 55% 5%; */
+  padding: 5px 5px;
   border-bottom: 2px solid #353131;
 }
 
@@ -102,57 +128,26 @@ body{
   font-size: 1.4rem;
 }
 
-.item-text {
-  flex: 6;
-}
-
-.item-price {
-  flex: 1; 
-}
-
 .delete-icon {
-  text-align: right;
+  display: flex;
+  align-items: center;
   font-size: 28px;
   color: red;
-  flex: .5;
   cursor: pointer;
 }
 
-.price-container::before {
-  content: "$";
-  font-size: 1.4rem;
-  margin-right: 0.2rem;
-}
-
-.price-container{
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 30%;
-}
-
-.form-container input[type="number"] {
-  display: block;
-}
-
-input:focus {
+/* input:focus {
   box-shadow: 0 0 10px #f24c4c;
   transition: all 0.2s ease-in-out;
-}
+} */
 
-.submit-btn {
-  width: 140px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  font-size: 1.3rem;
-  background-color: #ff0000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  margin: 10px auto;
+.items-container .total-expenses{
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #ffffff;
 }
 
 .logout-btn{

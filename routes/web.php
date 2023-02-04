@@ -68,6 +68,7 @@ Route::post('/addExpense', function(Request $request) {
         'amount' => $request->amount,
         'user_id' => $request->user_id
     ]);
+    return $expense;
 })->middleware('auth');
 
 Route::get('/expenses', function() {
@@ -90,7 +91,8 @@ Route::post('/login', function(Request $request){
 
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
-        return redirect('/');
+        $csrfToken = csrf_token();
+        return $csrfToken;
     }
 
     return back()->withErrors([
@@ -115,7 +117,7 @@ Route::post('/logout', function(Request $request) {
 
     $request->session()->regenerateToken();
 
-    return redirect('/');
+    // return redirect('/');
 });
 
 Route::middleware('auth')->group(function () {

@@ -7,25 +7,18 @@ import '../../Styles/login.css';
 import '../../Styles/register.css';
 import {Item} from '../Components/Item'
 
-function App({ users, email, setEmail, password, setPassword, setCsrfToken, user, user_id, setUser, loginStatus, setLoginStatus, expenses, setExpenses }) {
+function App({ users, email, setEmail, password, setPassword, setCsrfToken, user, user_id, setUser, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses }) {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [formError, setFormError] = useState(null);
 
   const [totalExpenses, setTotalExpenses] = useState(0)
-
   const nameInputRef = useRef(null);
 
-  // const formatPrice = (price) => {
-  //   let numPrice = Number(price)
-  //   let stringPrice = numPrice.toFixed(2)
-  //   setAmount(stringPrice)
-  // }
+  const navigate = useNavigate()
 
   const addItem = (e) => {
     e.preventDefault()
-    console.log("In addItem, user_id is:")
-    console.log(user_id)
     if (!name || !amount) {
       setFormError("Both text and amount fields are required.");
       return;
@@ -34,37 +27,40 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
       setFormError("amount should only contain numbers.");
       return;
     }
-    if(loginStatus){
-      axios.post('/addExpense', {name, amount, user_id})
-    }
     let numPrice = Number(amount)
     let stringPrice = numPrice.toFixed(2)
     setAmount(stringPrice)
-    setExpenses([
-      ...expenses,
-      { name, amount: stringPrice },
-    ]);
+    if(loginStatus){
+      console.log("loginStatus, so about to post to addExpense")
+      axios.post('/addExpense', {name, amount, user_id})
+      .then((e => {
+        let expense = e.data
+        setUserExpenses([
+          ...userExpenses,
+          { name, amount: stringPrice, id: expense.id },
+        ]);
+      }))
+    }
+    else{
+      console.log("Running else statement in handleDelete, where guestExpenseId is:")
+      console.log(guestExpenseId)
+      setGuestExpenses([
+        ...guestExpenses,
+        { name, amount: stringPrice, id: guestExpenseId },
+      ]);
+      setGuestExpenseId((guestExpenseId + 1))
+    }
+    setHasExpenses(true)
     setName("");
     setAmount("");
     setFormError(null);
     nameInputRef.current.focus();
   }
 
-  const handleDelete = (id) => {
-    setExpenses(expenses.filter((expense) => expense.id !== id))
-    axios.delete(`expenses/${id}`)
-  }
-
-  const handlePriceChange = (e) => {
-    const value = e.target.value;
-    const match = value.match(/^\d+(\.\d{0,2})?$/);
-    if (match) {
-      setAmount(value);
-      setFormError(null);
-    }
-  }
-
-  const navigate = useNavigate()
+  useEffect(() => {
+    console.log("Guest expenses are:")
+    console.log(guestExpenses)
+  }, [guestExpenses])
 
   const handleLogout = async (e) => {
     e.preventDefault()
@@ -76,21 +72,27 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
       console.log("About to set loginStatus to false.")
       setLoginStatus(false)
       setCsrfToken(e.data)
-      setExpenses([])
+      setUserExpenses([])
+      setGuestExpenses([])
       navigate('/', { replace: true });
     })
   }
 
   useEffect(() => {
     let total=0
-    if(expenses){
-      for(let expense of expenses){
+    if(userExpenses){
+      for(let expense of userExpenses){
+        total += Number(expense.amount)
+      }
+    }
+    else if(guestExpenses){
+      for(let expense of guestExpenses){
         total += Number(expense.amount)
       }
     }
     total = total.toFixed(2)
     setTotalExpenses(total)
-  }, [expenses])
+  }, [userExpenses, guestExpenses])
 
   return (
     <div className='list'>
@@ -100,39 +102,50 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
       </p>
       {!loginStatus && 
       <p className='guest-message'><Link to='/login'>Login</Link> or <Link to='/register'>Register</Link> to save your expenses.</p>}
-      <ul className={`items-container ${expenses.length < 1 && 'no-expenses'}`}>
-        {expenses.map((expense, index) => (
-          <Item key={index} id={expense.id} text={expense.name} amount={expense.amount} deleteItem={() => handleDelete(expense.id)} />
-        ))}
-        {expenses.length > 0 && <p className='total-expenses'>Total Expenses: {totalExpenses}</p>}
+      <ul className={`items-container ${(userExpenses.length == 0 && guestExpenses.length == 0) && 'no-expenses'}`}>
+      {hasExpenses ? (
+        loginStatus ? (
+          userExpenses.map((userExpense, index) => (
+            <Item key={index} id={userExpense.id} text={userExpense.name} amount={userExpense.amount} loginStatus={loginStatus} userExpenses={userExpenses} setUserExpenses={setUserExpenses} handleDelete={handleDelete} />
+          ))
+        ) : (
+          guestExpenses.map((guestExpense, index) => (
+            <Item key={index} id={guestExpense.id} text={guestExpense.name} amount={guestExpense.amount} loginStatus={loginStatus} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} />
+          ))
+        )
+      ) : null}
+
+        {(userExpenses.length > 0 || guestExpenses.length > 0) && <p className='total-expenses'>Total Expenses: {totalExpenses}</p>}
       </ul>
       <div className='form-container'>
-        <input
-          ref={nameInputRef}
-          className='item-text'
-          value={name}
-          name='name'
-          type='text'
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Expense"
-        />
-        <div className='amount-container'>
+        <form className='addExpense-form' onSubmit={addItem}>
           <input
-            value={amount}
-            className='item-amount'
-            type='number'
-            name='amount'
-            step="0.01" 
-            min="0" max="10000" 
-            onChange={(e) => 
-              setAmount(e.target.value)}
-            placeholder="Amount"
+            ref={nameInputRef}
+            className='item-text'
+            value={name}
+            name='name'
+            type='text'
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Expense"
           />
-        </div>
-        {formError && <div className='error-message'>{formError}</div>}
+          <div className='amount-container'>
+            <input
+              value={amount}
+              className='item-price'
+              type='number'
+              name='amount'
+              step="0.01" 
+              min="0" max="10000" 
+              onChange={(e) => 
+                setAmount(e.target.value)}
+              placeholder="Amount"
+            />
+          </div>
+          <button className='submit-btn'>Add Item</button>
+          {formError && <div className='error-message'>{formError}</div>}
+        </form>
       </div>
-      <button className='submit-btn' onClick={addItem}>Add Item</button>
-      {loginStatus && <form onSubmit={handleLogout}>
+      {loginStatus && <form className='deleteExpense-form' onSubmit={handleLogout}>
         <button type='submit' className='logout-btn'>Logout</button>
       </form>}
     </div>

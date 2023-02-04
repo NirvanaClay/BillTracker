@@ -17,10 +17,10 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
     e.preventDefault()
     axios.post('login', {email, password})
     .then((e) => {
-      return axios.get('getCsrf')
-    })
-    .then((e) => {
-      console.log("About to set loginStatus to true.")
+      axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
+      document.head.querySelector('meta[name="csrf-token"]').content = e.data;
+      console.log("e.data which is being set in the head after login request is:")
+      console.log(e.data)
       setLoginStatus(true)
       setCsrfToken(e.data)
       navigate('/', { replace: true })
