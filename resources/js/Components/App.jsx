@@ -57,11 +57,6 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
     nameInputRef.current.focus();
   }
 
-  useEffect(() => {
-    console.log("Guest expenses are:")
-    console.log(guestExpenses)
-  }, [guestExpenses])
-
   const handleLogout = async (e) => {
     e.preventDefault()
     axios.post('logout')
@@ -80,17 +75,23 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
 
   useEffect(() => {
     let total=0
-    if(userExpenses){
+    if(userExpenses.length > 0){
+      console.log("There are userExpenses, which are:")
+      console.log(userExpenses)
       for(let expense of userExpenses){
         total += Number(expense.amount)
       }
     }
-    else if(guestExpenses){
+    else if(guestExpenses.length > 0){
+      console.log("User expenses inside of if statement are:")
+      console.log(guestExpenses)
       for(let expense of guestExpenses){
         total += Number(expense.amount)
       }
     }
     total = total.toFixed(2)
+    console.log("In App effect, total for expenses is:")
+    console.log(total)
     setTotalExpenses(total)
   }, [userExpenses, guestExpenses])
 
@@ -121,7 +122,7 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
         <form className='addExpense-form' onSubmit={addItem}>
           <input
             ref={nameInputRef}
-            className='item-text'
+            className='newExpense-text'
             value={name}
             name='name'
             type='text'

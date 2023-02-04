@@ -14,7 +14,7 @@ function Item({ id, text, imgUrl, amount, loginStatus, userExpenses, setUserExpe
   return (
     <li className='item-container'>
       <p className='item-text'>{text}</p>
-      <p className='item-price'>{amount}</p>
+      <p className='item-price'>${amount}</p>
       <i className="fas fa-xmark delete-icon" onClick={() => handleDelete({id})}></i>
       {/* <i className="fas fa-xmark delete-icon" onClick={() => console.log("Id in deleted item component is:" + id)}></i> */}
     </li>

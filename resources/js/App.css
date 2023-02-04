@@ -71,7 +71,7 @@ body{
   text-align: center;
 }
 
-.addExpense-form .item-text {
+.addExpense-form .newExpense-text {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -126,6 +126,14 @@ body{
 
 .item-container p {
   font-size: 1.4rem;
+}
+
+.item-container .item-text{
+  width: 40%;
+}
+
+.item-container .item-price{
+  width: 40%;
 }
 
 .delete-icon {
@@ -194,7 +202,7 @@ body{
   .form-container{
     display: block;
   }
-  .item-text{
+  .newExpense-text{
     width: 100%;
   }
   .item-amount{
