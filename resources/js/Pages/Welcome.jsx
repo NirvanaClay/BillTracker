@@ -53,7 +53,7 @@ export default function Welcome ()  {
       console.log(e.data)
       axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
     })
-  }, [])
+  }, [loginStatus])
 
   useEffect(() => {
     if(loginStatus){
