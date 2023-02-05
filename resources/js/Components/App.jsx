@@ -17,8 +17,32 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
 
   const navigate = useNavigate()
 
-  const addItem = (e) => {
-    e.preventDefault()
+  const formatExpenseName = (expense) => {
+    console.log("Running handleExpenseName, with expense of:");
+    console.log(expense)
+    expense = expense.toLowerCase()
+    .split(' ')
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(' ');
+    return expense
+  }
+
+  const handleNameChange = (e) => {
+    console.log("Running handleNameChange, with e of:");
+    console.log(e)
+    const expense = e;
+    setName(formatExpenseName(expense));
+  };
+
+  const handleAmountChange = (e) => {
+    console.log("Running handleAmountChange, with e.target.value of:");
+    console.log(e.target.value)
+    setAmount(e.target.value)
+  }
+
+  const addItem = () => {
+    // e.preventDefault()
+    console.log("Running addItem")
     if (!name || !amount) {
       setFormError("Both text and amount fields are required.");
       return;
@@ -73,6 +97,14 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
     })
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (name !== "" && amount !== "") {
+      console.log("name and amount are not empty in handleSubmit")
+      addItem();
+    }
+  }
+
   useEffect(() => {
     let total=0
     if(userExpenses.length > 0){
@@ -119,14 +151,14 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
         {(userExpenses.length > 0 || guestExpenses.length > 0) && <p className='total-expenses'>Total Expenses: {totalExpenses}</p>}
       </ul>
       <div className='form-container'>
-        <form className='addExpense-form' onSubmit={addItem}>
+        <form className='addExpense-form' onSubmit={handleSubmit}>
           <input
             ref={nameInputRef}
             className='newExpense-text'
             value={name}
             name='name'
             type='text'
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => handleNameChange(e.target.value)}
             placeholder="Expense"
           />
           <div className='amount-container'>
@@ -137,8 +169,7 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
               name='amount'
               step="0.01" 
               min="0" max="10000" 
-              onChange={(e) => 
-                setAmount(e.target.value)}
+              onChange={handleAmountChange}
               placeholder="Amount"
             />
           </div>

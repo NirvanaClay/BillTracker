@@ -7,7 +7,9 @@ import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'r
 import {App} from '../Components/App'
 
 
-const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLoginStatus, user, setUser }) => {
+const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLoginStatus, user, setUser, setGuestExpenses }) => {
+
+  const [loginError, setLoginError] = useState('')
 
   axios.defaults.withCredentials = true;
 
@@ -23,7 +25,12 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
       console.log(e.data)
       setLoginStatus(true)
       setCsrfToken(e.data)
+      setGuestExpenses([])
+      setLoginError('')
       navigate('/', { replace: true })
+    })
+    .catch((e) => {
+      setLoginError(e.response.data)
     })
   }
 
@@ -38,6 +45,7 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
           <label htmlFor='password'>Password:</label>
           <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='Enter your password' required />
         </div>
+        {loginError && <p className='login-error'>*{loginError}</p>}
         <button type='submit'>Login</button>
       </form>
     </div>
