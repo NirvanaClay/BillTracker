@@ -10,6 +10,8 @@ import { Link, Head } from '@inertiajs/inertia-react';
 import {Navbar} from '../Components/Navbar.jsx';
 
 import '../App.css'
+import '../../Styles/login.css';
+import '../../Styles/register.css';
 
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));

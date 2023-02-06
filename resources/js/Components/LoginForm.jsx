@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../../Styles/login.css';
+// import '../../Styles/login.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'react-router-dom';

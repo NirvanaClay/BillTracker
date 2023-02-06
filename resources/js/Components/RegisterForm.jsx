@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'react-router-dom';
 
-import '../../Styles/register.css';
+// import '../../Styles/register.css';
 import axios from 'axios';
 
 const RegisterForm = ({ email, setEmail, password, setPassword, password_confirmation, setPasswordConfirmation, setCsrfToken, setLoginStatus, user, setUser }) => {
 
   const navigate = useNavigate()
 
+  const [registerErrors, setRegisterErrors] = useState([])
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password !== password_confirmation) {
-      console.error('Passwords do not match');
-      return;
-    }
+    // if (password !== password_confirmation) {
+    //   setRegisterError('Passwords do not match');
+    //   return;
+    // }
 
     axios.post('register', {email, password, password_confirmation})
     .then((e) => {
@@ -23,6 +25,15 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
       console.log("Setting loginStatus to true from register.")
       setLoginStatus(true)
       navigate('/', { replace: true })
+    })
+    .catch((e) => {
+      // setErrorMessages(Object.values(data.errors).flat());
+      setRegisterErrors(Object.values(e.response.data.errors).flat());
+      // if (e.response.status === 422) {
+      //   setRegisterError(e.response.data.errors.email[0]);
+      // } else {
+      //   setRegisterError("An error occurred during registration");
+      // }
     })
   }
 
@@ -63,6 +74,14 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
               required 
             />
         </div>
+        {registerErrors.length > 0 && (
+          <ul>
+            {registerErrors.map((message, index) => (
+              <li key={index} className='register-error'>{message}</li>
+            ))}
+          </ul>
+        )}
+        {/* // {registerError && <p className='register-error'>*{registerError}</p>} */}
         <button type="submit">Register</button>
       </form>
     </div>

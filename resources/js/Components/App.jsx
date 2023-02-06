@@ -18,8 +18,6 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
   const navigate = useNavigate()
 
   const formatExpenseName = (expense) => {
-    console.log("Running handleExpenseName, with expense of:");
-    console.log(expense)
     expense = expense.toLowerCase()
     .split(' ')
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
@@ -28,15 +26,11 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
   }
 
   const handleNameChange = (e) => {
-    console.log("Running handleNameChange, with e of:");
-    console.log(e)
     const expense = e;
     setName(formatExpenseName(expense));
   };
 
   const handleAmountChange = (e) => {
-    console.log("Running handleAmountChange, with e.target.value of:");
-    console.log(e.target.value)
     setAmount(e.target.value)
   }
 

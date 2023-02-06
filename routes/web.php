@@ -36,7 +36,7 @@ Route::get('/', function() {
 Route::post('/register', function(Request $request)
 {
     $request->validate([
-        'email' => 'required|string|email|max:255|unique:'.User::class,
+        'email' => 'required|string|email|max:255|unique:'.User::class.'|regex:/^[\w.+-]+@[\w-]+\.[a-z]+$/i',
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ]);
 
@@ -50,7 +50,6 @@ Route::post('/register', function(Request $request)
     Auth::login($user);
     $csrfToken = csrf_token();
     return $csrfToken;
-    // return redirect(RouteServiceProvider::HOME);
 });
 
 Route::get('/getCsrf', function() {

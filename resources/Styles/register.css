@@ -50,6 +50,13 @@
   cursor: pointer;
 }
 
+.register-error{
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 .register-form input[type="submit"]:hover {
   background-color: #45a049;
 }
