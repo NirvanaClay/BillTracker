@@ -77,7 +77,7 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
         {registerErrors.length > 0 && (
           <ul>
             {registerErrors.map((message, index) => (
-              <li key={index} className='register-error'>{message}</li>
+              <li key={index} className='register-error'>*{message}</li>
             ))}
           </ul>
         )}
