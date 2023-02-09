@@ -7,7 +7,7 @@ import '../../Styles/login.css';
 import '../../Styles/register.css';
 import {Item} from '../Components/Item'
 
-function App({ users, email, setEmail, password, setPassword, setCsrfToken, user, user_id, setUser, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses }) {
+function App({ users, email, setEmail, password, setPassword, setCsrfToken, user, user_id, setUser, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses, handleEdit, isEditing, setIsEditing }) {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [formError, setFormError] = useState(null);
@@ -133,11 +133,11 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
       {hasExpenses ? (
         loginStatus ? (
           userExpenses.map((userExpense, index) => (
-            <Item key={index} id={userExpense.id} text={userExpense.name} amount={userExpense.amount} loginStatus={loginStatus} userExpenses={userExpenses} setUserExpenses={setUserExpenses} handleDelete={handleDelete} />
+            <Item key={index} id={userExpense.id} text={userExpense.name} amount={userExpense.amount} loginStatus={loginStatus} userExpenses={userExpenses} setUserExpenses={setUserExpenses} handleDelete={handleDelete} handleEdit={handleEdit} handleSubmit={handleSubmit} handleAmountChange={handleAmountChange} handleNameChange={handleNameChange} nameInputRef={nameInputRef} formatExpenseName={formatExpenseName} isEditing={isEditing} setIsEditing={setIsEditing} />
           ))
         ) : (
           guestExpenses.map((guestExpense, index) => (
-            <Item key={index} id={guestExpense.id} text={guestExpense.name} amount={guestExpense.amount} loginStatus={loginStatus} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} />
+            <Item key={index} id={guestExpense.id} text={guestExpense.name} amount={guestExpense.amount} loginStatus={loginStatus} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} handleEdit={handleEdit}handleSubmit={handleSubmit} handleAmountChange={handleAmountChange} handleNameChange={handleNameChange} nameInputRef={nameInputRef} formatExpenseName={formatExpenseName} isEditing={isEditing} setIsEditing={setIsEditing} />
           ))
         )
       ) : null}

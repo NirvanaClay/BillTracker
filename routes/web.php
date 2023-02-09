@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 use App\Models\User;
 use App\Models\Expense;
@@ -82,6 +83,17 @@ Route::delete('/expenses/{id}', function(Request $request) {
     $expense->delete();
 });
 
+Route::put('/expenses/{id}', function(Request $request) {
+    $id = $request->id;
+    $name = $request->editName;
+    $amount = $request->editAmount;
+    $expense = Expense::find($id);
+    $expense->name = $name;
+    $expense->amount = $amount;
+    $expense->save();
+    return $expense;
+});
+
 Route::post('/login', function(Request $request){
     $credentials = $request->validate([
         'email' => ['required', 'email'],
@@ -119,6 +131,18 @@ Route::post('/logout', function(Request $request) {
     // return redirect('/');
 });
 
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+ 
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+ 
+    return $status === Password::RESET_LINK_SENT
+                ? back()->with(['status' => __($status)])
+                : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -134,4 +158,4 @@ Route::get('{any}', function () {
     ]);
 });
 
-// require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';

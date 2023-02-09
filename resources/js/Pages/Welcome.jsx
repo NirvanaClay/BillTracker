@@ -6,15 +6,15 @@ import axios from 'axios';
 import {App} from '../Components/App.jsx';
 import {RegisterForm} from '../Components/RegisterForm.jsx';
 import {LoginForm} from '../Components/LoginForm.jsx';
+import {PasswordReset} from '../Components/PasswordReset.jsx';
 import { Link, Head } from '@inertiajs/inertia-react';
 import {Navbar} from '../Components/Navbar.jsx';
 
 import '../App.css'
 import '../../Styles/login.css';
 import '../../Styles/register.css';
+import '../../Styles/item.css';
 
-
-// const root = ReactDOM.createRoot(document.getElementById("root"));
 
 export default function Welcome ()  {
   const [loginStatus, setLoginStatus] = useState(false)
@@ -29,9 +29,11 @@ export default function Welcome ()  {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
 
-  const [guestExpenseId, setGuestExpenseId] = useState(0)
+  const [guestExpenseId, setGuestExpenseId] = useState(1)
 
   const [hasExpenses, setHasExpenses] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [hasEdited, setHasEdited] = useState(false)
 
   const handleDelete = ({ id }) => {
     console.log("In handleDelete, id is:")
@@ -40,6 +42,7 @@ export default function Welcome ()  {
       console.log("Running if statement in handleDelete")
       axios.delete(`expenses/${id}`)
       setUserExpenses(userExpenses.filter(userExpense => userExpense.id !== id))
+      setIsEditing(true)
     }
     else{
       console.log("Running else statement in handleDelete")
@@ -47,15 +50,24 @@ export default function Welcome ()  {
     }
   }
 
-  useEffect(() => {
-    axios.get('getCsrf')
-    .then((e) => {
-      setCsrfToken(e.data)
-      console.log("return of getCsrf in effect is:")
-      console.log(e.data)
-      axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
-    })
-  }, [loginStatus])
+  const handleEdit = ({id, editName, editAmount}) => {
+    console.log("Running handleEdit")
+    axios.put(`expenses/${id}`, {id, editName, editAmount})
+    setIsEditing(false)
+    console.log("In handleEdit, isEditing is:")
+    console.log(isEditing)
+    setHasEdited(true)
+  }
+
+  // useEffect(() => {
+  //   axios.get('getCsrf')
+  //   .then((e) => {
+  //     setCsrfToken(e.data)
+  //     console.log("return of getCsrf in effect is:")
+  //     console.log(e.data)
+  //     axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
+  //   })
+  // }, [loginStatus])
 
   useEffect(() => {
     if(loginStatus){
@@ -92,6 +104,29 @@ export default function Welcome ()  {
         setUserExpenses([...expenseData])
       })
     }
+  }, [loginStatus, hasEdited])
+
+  useEffect(() => {
+    axios.get('checkLogin')
+    .then((e) => {
+      if(e.data){
+        setLoginStatus(true)
+        console.log("return of checkLogin in effect is:")
+        console.log(e.data)
+      }
+      else{
+        console.log("with checkLogin in effect, e.data is false")
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    axios.get('getCsrf')
+    .then((e) => {
+      axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
+      console.log("In getCsrf effect, e.data is:")
+      console.log(e.data)
+    })
   }, [loginStatus])
   
   return(
@@ -99,9 +134,13 @@ export default function Welcome ()  {
       <Switch>
         {loginStatus ? '' : <Navbar />}
         <Routes>
-          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user={user} setUser={setUser} user_id={user_id} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} name={name} setName={setName} amount={amount} setAmount={setAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} />} />
+          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user={user} setUser={setUser} user_id={user_id} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} name={name} setName={setName} amount={amount} setAmount={setAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} />} />
+
           <Route path="/register" element={<RegisterForm setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} password_confirmation={password_confirmation} setPasswordConfirmation={setPasswordConfirmation} setCsrfToken={setCsrfToken} />} />
+
           <Route path="/login" element={<LoginForm setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} setGuestExpenses={setGuestExpenses} />} />
+
+          <Route path="/password-reset" element={<PasswordReset setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} setGuestExpenses={setGuestExpenses} />} />
         </Routes>
       </Switch>
     </>

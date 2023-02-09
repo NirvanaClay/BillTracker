@@ -1,0 +1,52 @@
+.editForm-container form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.editExpense-form{
+  width: 100%;
+}
+
+.editExpense-form .editExpense-text {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 50px;
+  width: 100%;
+}
+
+.editAmount-container::before {
+  content: "$";
+  font-size: 1.4rem;
+  margin: 0 2px;
+}
+
+.editAmount-container{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.editExpense-price{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+}
+
+
+.editBtn-container{
+  display: flex;
+  justify-content: center;
+  width: 250px;
+}
+
+.edit-btn{
+  color: green;
+  font-size: 24px;
+}

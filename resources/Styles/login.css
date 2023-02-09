@@ -60,6 +60,11 @@
   background-color: #45a049;
 }
 
+.forgot-password{
+  cursor: pointer;
+  text-align: center;
+}
+
 @media only screen and (max-width: 480px) {
   .login-field input{
     width: 250px;
