@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/fontawesome-free';
-// import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 function Item({ id, text, imgUrl, amount, loginStatus, userExpenses, setUserExpenses, guestExpenses, setGuestExpenses, handleDelete, handleEdit, handleAmountChange, handleSubmit, handleNameChange, nameInputRef, formatExpenseName, isEditing, setIsEditing }) {
 
@@ -8,22 +6,6 @@ function Item({ id, text, imgUrl, amount, loginStatus, userExpenses, setUserExpe
   const [editAmount, setEditAmount] = useState(amount)
 
   const [isEditingItem, setIsEditingItem] = useState(false)
-
-  useEffect(() => {
-    console.log("editName is:")
-    console.log(editName)
-  }, [editName])
-
-  // useEffect(() => {
-  //   if(isEditing){
-  //     console.log("In Item, isEditing is true.")
-  //     setIsEditingItem(true)
-  //   }
-  //   else{
-  //     console.log("In Item, isEditing is false.")
-  //     setIsEditingItem(false)
-  //   }
-  // }, [isEditing])
 
   const handleNameEdit = (e) => {
     const expense = e;
@@ -74,11 +56,9 @@ function Item({ id, text, imgUrl, amount, loginStatus, userExpenses, setUserExpe
       : <>
         <p className='item-text'>{text}</p>
         <p className='item-price'>${amount}</p>
-        {/* <i className="fa-solid fa-pencil edit-icon" onClick={() => handleEdit({id})}></i> */}
         <i className="fa-solid fa-pencil edit-icon" onClick={() => setIsEditingItem(true)}></i>
         <i className="fas fa-xmark delete-icon" onClick={() => handleDelete({id})}></i>
       </>}
-      {/* <i className="fas fa-xmark delete-icon" onClick={() => console.log("Id in deleted item component is:" + id)}></i> */}
     </li>
   )
 }

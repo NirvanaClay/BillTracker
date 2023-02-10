@@ -106,9 +106,6 @@ Route::post('/login', function(Request $request){
         return $csrfToken;
     }
     return response('The provided credentials do not match our records.', 401);
-    // return back()->withErrors([
-    //     'email' => 'The provided credentials do not match our records.',
-    // ])->onlyInput('email');
 });
 
 Route::get('/user', function (Request $request) {
@@ -127,8 +124,6 @@ Route::post('/logout', function(Request $request) {
     $request->session()->invalidate();
 
     $request->session()->regenerateToken();
-
-    // return redirect('/');
 });
 
 Route::post('/forgot-password', function (Request $request) {

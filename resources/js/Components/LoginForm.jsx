@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import '../../Styles/login.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'react-router-dom';
@@ -21,8 +20,6 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
     .then((e) => {
       axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
       document.head.querySelector('meta[name="csrf-token"]').content = e.data;
-      console.log("e.data which is being set in the head after login request is:")
-      console.log(e.data)
       setLoginStatus(true)
       setCsrfToken(e.data)
       setGuestExpenses([])

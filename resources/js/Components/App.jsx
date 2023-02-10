@@ -35,8 +35,6 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
   }
 
   const addItem = () => {
-    // e.preventDefault()
-    console.log("Running addItem")
     if (!name || !amount) {
       setFormError("Both text and amount fields are required.");
       return;
@@ -49,7 +47,6 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
     let stringPrice = numPrice.toFixed(2)
     setAmount(stringPrice)
     if(loginStatus){
-      console.log("loginStatus, so about to post to addExpense")
       axios.post('/addExpense', {name, amount, user_id})
       .then((e => {
         let expense = e.data
@@ -60,8 +57,6 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
       }))
     }
     else{
-      console.log("Running else statement in handleDelete, where guestExpenseId is:")
-      console.log(guestExpenseId)
       setGuestExpenses([
         ...guestExpenses,
         { name, amount: stringPrice, id: guestExpenseId },
@@ -82,7 +77,6 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
       return axios.get('csrf-token')
     })
     .then((e) => {
-      console.log("About to set loginStatus to false.")
       setLoginStatus(false)
       setCsrfToken(e.data)
       setUserExpenses([])
@@ -94,7 +88,6 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name !== "" && amount !== "") {
-      console.log("name and amount are not empty in handleSubmit")
       addItem();
     }
   }
@@ -102,22 +95,16 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
   useEffect(() => {
     let total=0
     if(userExpenses.length > 0){
-      console.log("There are userExpenses, which are:")
-      console.log(userExpenses)
       for(let expense of userExpenses){
         total += Number(expense.amount)
       }
     }
     else if(guestExpenses.length > 0){
-      console.log("User expenses inside of if statement are:")
-      console.log(guestExpenses)
       for(let expense of guestExpenses){
         total += Number(expense.amount)
       }
     }
     total = total.toFixed(2)
-    console.log("In App effect, total for expenses is:")
-    console.log(total)
     setTotalExpenses(total)
   }, [userExpenses, guestExpenses])
 
@@ -179,4 +166,3 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
 
 
     export {App}
-// export default App;

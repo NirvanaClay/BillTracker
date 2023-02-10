@@ -36,38 +36,21 @@ export default function Welcome ()  {
   const [hasEdited, setHasEdited] = useState(false)
 
   const handleDelete = ({ id }) => {
-    console.log("In handleDelete, id is:")
-    console.log(id)
     if(loginStatus) {
-      console.log("Running if statement in handleDelete")
       axios.delete(`expenses/${id}`)
       setUserExpenses(userExpenses.filter(userExpense => userExpense.id !== id))
       setIsEditing(true)
     }
     else{
-      console.log("Running else statement in handleDelete")
       setGuestExpenses(guestExpenses.filter(guestExpense => guestExpense.id !== id))
     }
   }
 
   const handleEdit = ({id, editName, editAmount}) => {
-    console.log("Running handleEdit")
     axios.put(`expenses/${id}`, {id, editName, editAmount})
     setIsEditing(false)
-    console.log("In handleEdit, isEditing is:")
-    console.log(isEditing)
     setHasEdited(true)
   }
-
-  // useEffect(() => {
-  //   axios.get('getCsrf')
-  //   .then((e) => {
-  //     setCsrfToken(e.data)
-  //     console.log("return of getCsrf in effect is:")
-  //     console.log(e.data)
-  //     axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
-  //   })
-  // }, [loginStatus])
 
   useEffect(() => {
     if(loginStatus){
@@ -75,8 +58,6 @@ export default function Welcome ()  {
       .then((e) => {
         if(e.data){
           let $currentUser = e.data
-          console.log("currentUser in user effect is:")
-          console.log($currentUser)
           setUser($currentUser)
           setUser_id($currentUser.id)
         }
@@ -84,14 +65,10 @@ export default function Welcome ()  {
   }, [loginStatus])
 
   useEffect(() => {
-    console.log("In Welcome effect, userExpenses are:")
-    console.log(userExpenses)
     if(userExpenses.length > 0){
-      console.log("userExpenses.length > 0, so setting hasExpenses to true")
       setHasExpenses(true)
     }
     else{
-      console.log("userExpenses.length == 0, so setting hasExpenses to false")
       setHasExpenses(false)
     }
   }, [userExpenses])
@@ -111,11 +88,8 @@ export default function Welcome ()  {
     .then((e) => {
       if(e.data){
         setLoginStatus(true)
-        console.log("return of checkLogin in effect is:")
-        console.log(e.data)
       }
       else{
-        console.log("with checkLogin in effect, e.data is false")
       }
     })
   }, [])
@@ -124,8 +98,6 @@ export default function Welcome ()  {
     axios.get('getCsrf')
     .then((e) => {
       axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
-      console.log("In getCsrf effect, e.data is:")
-      console.log(e.data)
     })
   }, [loginStatus])
   
