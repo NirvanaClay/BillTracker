@@ -10,20 +10,4 @@ export default defineConfig({
     build: {
         target: 'esnext'
     }
-    // plugins: [
-    //     laravel([
-    //         'resources/js/app.jsx',
-    //         // input: 'resources/js/app.jsx',
-    //         // refresh: true,
-    // ]),
-    //     react(),
-    // ],
-    // proxy: {
-    //     '/api': 'http://localhost:80'
-    // }
-    // resolve: {
-    //     alias: {
-    //         '@' : '/resources/js'
-    //     }
-    // }
 });
