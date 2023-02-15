@@ -35,6 +35,17 @@ export default function Welcome ()  {
   const [isEditing, setIsEditing] = useState(false)
   const [hasEdited, setHasEdited] = useState(false)
 
+  
+  const getExpenses = () => {
+    if(loginStatus){
+      axios.get('expenses')
+      .then((e) => {
+        let expenseData = e.data
+        setUserExpenses([...expenseData])
+      })
+    }
+  }
+
   const handleDelete = ({ id }) => {
     if(loginStatus) {
       axios.delete(`expenses/${id}`)
@@ -50,6 +61,7 @@ export default function Welcome ()  {
     axios.put(`expenses/${id}`, {id, editName, editAmount})
     setIsEditing(false)
     setHasEdited(true)
+    getExpenses()
   }
 
   useEffect(() => {
@@ -74,13 +86,8 @@ export default function Welcome ()  {
   }, [userExpenses])
 
   useEffect(() => {
-    if(loginStatus){
-      axios.get('expenses')
-      .then((e) => {
-        let expenseData = e.data
-        setUserExpenses([...expenseData])
-      })
-    }
+    console.log("Running expenses effect, loginStatus or hasEdited has changed.")
+    getExpenses()
   }, [loginStatus, hasEdited])
 
   useEffect(() => {
