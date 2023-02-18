@@ -34,13 +34,6 @@ export default function Welcome ()  {
   const [hasExpenses, setHasExpenses] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [hasEdited, setHasEdited] = useState(false)
-
-  useEffect(() => {
-    if(guestExpenses){
-      console.log("In welcome effect, guestExpenses are:")
-      console.log(guestExpenses)
-    }
-  }, [guestExpenses])
   
   const getExpenses = () => {
     if(loginStatus){
@@ -100,11 +93,6 @@ export default function Welcome ()  {
       setHasExpenses(false)
     }
   }, [userExpenses])
-
-  useEffect(() => {
-    console.log("Running expenses effect, loginStatus or hasEdited has changed.")
-    getExpenses()
-  }, [loginStatus, hasEdited])
 
   useEffect(() => {
     axios.get('checkLogin')
