@@ -100,8 +100,6 @@ export default function Welcome ()  {
       if(e.data){
         setLoginStatus(true)
       }
-      else{
-      }
     })
   }, [])
 

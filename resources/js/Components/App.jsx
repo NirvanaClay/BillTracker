@@ -33,6 +33,10 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
   }
 
   const addItem = () => {
+    console.log("In addItem, newExpenseName is:")
+    console.log(newExpenseName)
+    console.log("and newExpenseAmount is:")
+    console.log(newExpenseAmount)
     if (!newExpenseName || !newExpenseAmount) {
       setFormError("Both text and amount fields are required.");
       return;
@@ -43,9 +47,13 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
     }
     let numPrice = Number(newExpenseAmount)
     let stringPrice = numPrice.toFixed(2)
+    console.log("Which gives a numPrice of:")
+    console.log(numPrice)
+    console.log("And a stringPrice of:")
+    console.log(stringPrice)
     setNewExpenseAmount(stringPrice)
     if(loginStatus){
-      axios.post('/addExpense', {newExpenseName, newExpenseAmount, user_id})
+      axios.post('/addExpense', {name: newExpenseName, amount: newExpenseAmount, user_id})
       .then((e => {
         let expense = e.data
         setUserExpenses([
