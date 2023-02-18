@@ -7,13 +7,11 @@ import '../../Styles/login.css';
 import '../../Styles/register.css';
 import {Item} from '../Components/Item'
 
-function App({ users, email, setEmail, password, setPassword, setCsrfToken, user, user_id, setUser, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses, handleEdit, isEditing, setIsEditing }) {
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
+function App({ users, email, setEmail, password, setPassword, setCsrfToken, user, user_id, setUser, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses, handleEdit, isEditing, setIsEditing, newExpenseName, setNewExpenseName, newExpenseAmount, setNewExpenseAmount }) {
+  const nameInputRef = useRef(null);
   const [formError, setFormError] = useState(null);
 
   const [totalExpenses, setTotalExpenses] = useState(0)
-  const nameInputRef = useRef(null);
 
   const navigate = useNavigate()
 
@@ -27,46 +25,48 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
 
   const handleNameChange = (e) => {
     const expense = e;
-    setName(formatExpenseName(expense));
+    setNewExpenseName(formatExpenseName(expense))
   };
 
   const handleAmountChange = (e) => {
-    setAmount(e.target.value)
+    setNewExpenseAmount(e.target.value)
   }
 
   const addItem = () => {
-    if (!name || !amount) {
+    if (!newExpenseName || !newExpenseAmount) {
       setFormError("Both text and amount fields are required.");
       return;
     }
-    if (isNaN(amount) || amount < 0) {
+    if (isNaN(newExpenseAmount) || newExpenseAmount < 0) {
       setFormError("amount should only contain numbers.");
       return;
     }
-    let numPrice = Number(amount)
+    let numPrice = Number(newExpenseAmount)
     let stringPrice = numPrice.toFixed(2)
-    setAmount(stringPrice)
+    setNewExpenseAmount(stringPrice)
     if(loginStatus){
-      axios.post('/addExpense', {name, amount, user_id})
+      axios.post('/addExpense', {newExpenseName, newExpenseAmount, user_id})
       .then((e => {
         let expense = e.data
         setUserExpenses([
           ...userExpenses,
-          { name, amount: stringPrice, id: expense.id },
+          { name: newExpenseName, amount: stringPrice, id: expense.id },
         ]);
       }))
     }
     else{
       setGuestExpenses([
         ...guestExpenses,
-        { name, amount: stringPrice, id: guestExpenseId },
+        { name: newExpenseName, amount: stringPrice, id: guestExpenseId },
       ]);
       setGuestExpenseId((guestExpenseId + 1))
     }
     setHasExpenses(true)
-    setName("");
-    setAmount("");
+    setNewExpenseName("");
+    setNewExpenseAmount("");
     setFormError(null);
+    console.log("nameInputRef.current is:")
+    console.log(nameInputRef.current)
     nameInputRef.current.focus();
   }
 
@@ -87,7 +87,7 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name !== "" && amount !== "") {
+    if (newExpenseName !== "" && newExpenseAmount !== "") {
       addItem();
     }
   }
@@ -136,7 +136,7 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
           <input
             ref={nameInputRef}
             className='newExpense-text'
-            value={name}
+            value={newExpenseName}
             name='name'
             type='text'
             onChange={(e) => handleNameChange(e.target.value)}
@@ -144,7 +144,7 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
           />
           <div className='amount-container'>
             <input
-              value={amount}
+              value={newExpenseAmount}
               className='item-price'
               type='number'
               name='amount'

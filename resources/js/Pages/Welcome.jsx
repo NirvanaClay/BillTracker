@@ -26,8 +26,8 @@ export default function Welcome ()  {
   const [csrfToken, setCsrfToken] = useState('')
   const [userExpenses, setUserExpenses] = useState([])
   const [guestExpenses, setGuestExpenses] = useState([])
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
+  const [newExpenseName, setNewExpenseName] = useState('')
+  const [newExpenseAmount, setNewExpenseAmount] = useState('')
 
   const [guestExpenseId, setGuestExpenseId] = useState(1)
 
@@ -35,6 +35,12 @@ export default function Welcome ()  {
   const [isEditing, setIsEditing] = useState(false)
   const [hasEdited, setHasEdited] = useState(false)
 
+  useEffect(() => {
+    if(guestExpenses){
+      console.log("In welcome effect, guestExpenses are:")
+      console.log(guestExpenses)
+    }
+  }, [guestExpenses])
   
   const getExpenses = () => {
     if(loginStatus){
@@ -58,10 +64,20 @@ export default function Welcome ()  {
   }
 
   const handleEdit = ({id, editName, editAmount}) => {
-    axios.put(`expenses/${id}`, {id, editName, editAmount})
+    const updatedExpense = {name: editName, amount: editAmount, id}
+    if(loginStatus){
+      axios.put(`expenses/${id}`, {id, editName, editAmount})
+      const newList = userExpenses.filter(expense => expense.id !== updatedExpense.id)
+      setUserExpenses([...newList, updatedExpense]);
+    }
+    else{
+      const newList = guestExpenses.filter(expense => expense.id !== updatedExpense.id)
+      setGuestExpenses([...newList, updatedExpense]);
+    }
+    setNewExpenseName('')
+    setNewExpenseAmount('')
     setIsEditing(false)
     setHasEdited(true)
-    getExpenses()
   }
 
   useEffect(() => {
@@ -113,7 +129,7 @@ export default function Welcome ()  {
       <Switch>
         {loginStatus ? '' : <Navbar />}
         <Routes>
-          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user={user} setUser={setUser} user_id={user_id} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} name={name} setName={setName} amount={amount} setAmount={setAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} />} />
+          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user={user} setUser={setUser} user_id={user_id} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} newExpenseName={newExpenseName} setNewExpenseName={setNewExpenseName} newExpenseAmount={newExpenseAmount} setNewExpenseAmount={setNewExpenseAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} />} />
 
           <Route path="/register" element={<RegisterForm setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} password_confirmation={password_confirmation} setPasswordConfirmation={setPasswordConfirmation} setCsrfToken={setCsrfToken} />} />
 

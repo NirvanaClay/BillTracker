@@ -7,6 +7,12 @@ function Item({ id, text, imgUrl, amount, loginStatus, userExpenses, setUserExpe
 
   const [isEditingItem, setIsEditingItem] = useState(false)
 
+  const beginEdit = () => {
+    setIsEditingItem(true)
+    setEditName(formatExpenseName(text))
+    setEditAmount(amount)
+  }
+
   const handleNameEdit = (e) => {
     const expense = e;
     setEditName(formatExpenseName(expense));
@@ -56,7 +62,7 @@ function Item({ id, text, imgUrl, amount, loginStatus, userExpenses, setUserExpe
       : <>
         <p className='item-text'>{text}</p>
         <p className='item-price'>${amount}</p>
-        <i className="fa-solid fa-pencil edit-icon" onClick={() => setIsEditingItem(true)}></i>
+        <i className="fa-solid fa-pencil edit-icon" onClick={beginEdit}></i>
         <i className="fas fa-xmark delete-icon" onClick={() => handleDelete({id})}></i>
       </>}
     </li>
