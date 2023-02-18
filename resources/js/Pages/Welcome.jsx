@@ -34,8 +34,8 @@ export default function Welcome ()  {
   const [hasExpenses, setHasExpenses] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [hasEdited, setHasEdited] = useState(false)
-  
-  const getExpenses = () => {
+
+  useEffect(() => {
     if(loginStatus){
       axios.get('expenses')
       .then((e) => {
@@ -43,7 +43,7 @@ export default function Welcome ()  {
         setUserExpenses([...expenseData])
       })
     }
-  }
+  }, [loginStatus])
 
   const handleDelete = ({ id }) => {
     if(loginStatus) {
