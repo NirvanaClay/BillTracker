@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter as Switch, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../axiosConfig';
 
 import {App} from '../Components/App.jsx';
 import {RegisterForm} from '../Components/RegisterForm.jsx';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
+import axios from '../axiosConfig';
 
 const RegisterForm = ({ email, setEmail, password, setPassword, password_confirmation, setPasswordConfirmation, setCsrfToken, setLoginStatus, user, setUser }) => {
 

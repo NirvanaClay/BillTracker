@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig';
 import Cookies from 'js-cookie';
 import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
 
   const [loginError, setLoginError] = useState('')
 
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
 
   const navigate = useNavigate()
 
