@@ -18,8 +18,6 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
     e.preventDefault()
     axios.post('login', {email, password})
     .then((e) => {
-      axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
-      document.head.querySelector('meta[name="csrf-token"]').content = e.data;
       setLoginStatus(true)
       setCsrfToken(e.data)
       setGuestExpenses([])
