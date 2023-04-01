@@ -19,7 +19,6 @@ const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLo
     axios.post('login', {email, password})
     .then((e) => {
       setLoginStatus(true)
-      setCsrfToken(e.data)
       setGuestExpenses([])
       setLoginError('')
       navigate('/', { replace: true })

@@ -97,18 +97,6 @@ export default function Welcome ()  {
     }
   }, [userExpenses])
 
-  // useEffect(() => {
-  //   if(loginStatus){
-  //     axios.get('user')
-  //     .then((e) => {
-  //       if(e.data){
-  //         let $currentUser = e.data
-  //         setUser($currentUser)
-  //         setUser_id($currentUser.id)
-  //       }
-  //     })    }
-  // }, [loginStatus])
-
   useEffect(() => {
     const xsrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
     axios.defaults.headers.common['XSRF-TOKEN'] = csrfToken;
