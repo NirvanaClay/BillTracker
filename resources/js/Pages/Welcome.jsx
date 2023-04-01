@@ -97,10 +97,10 @@ export default function Welcome ()  {
     }
   }, [userExpenses])
 
-  // useEffect(() => {
-  //   const xsrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-  //   axios.defaults.headers.common['XSRF-TOKEN'] = csrfToken;
-  // }, []);
+  useEffect(() => {
+    const xsrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+    axios.defaults.headers.common['XSRF-TOKEN'] = csrfToken;
+  }, []);
 
   useEffect(() => {
     axios.get('checkLogin').then((e) => {
