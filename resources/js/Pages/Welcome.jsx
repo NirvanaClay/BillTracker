@@ -110,8 +110,8 @@ export default function Welcome ()  {
   // }, [loginStatus])
 
   useEffect(() => {
-    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
+    const xsrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+    axios.defaults.headers.common['XSRF-TOKEN'] = csrfToken;
   }, []);
 
   useEffect(() => {
