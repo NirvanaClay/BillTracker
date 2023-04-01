@@ -71,9 +71,9 @@ function App({ users, email, setEmail, password, setPassword, setCsrfToken, user
   const handleLogout = async (e) => {
     e.preventDefault()
     axios.post('logout')
-    .then(() => {
-      return axios.get('csrf-token')
-    })
+    // .then(() => {
+    //   return axios.get('csrf-token')
+    // })
     .then((e) => {
       setLoginStatus(false)
       setCsrfToken(e.data)
