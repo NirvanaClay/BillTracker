@@ -53,11 +53,6 @@ Route::post('/register', function(Request $request)
     return $csrfToken;
 });
 
-Route::get('/getCsrf', function() {
-    $csrfToken = csrf_token();
-    return $csrfToken;
-});
-
 Route::get('/checkLogin', function() {
     return Auth::check();
 });

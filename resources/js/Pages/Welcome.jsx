@@ -74,16 +74,19 @@ export default function Welcome ()  {
   }
 
   useEffect(() => {
-    if(loginStatus){
-      axios.get('user')
-      .then((e) => {
-        if(e.data){
-          let $currentUser = e.data
-          setUser($currentUser)
-          setUser_id($currentUser.id)
+    if (loginStatus) {
+      axios.get('user').then((e) => {
+        if (e.data) {
+          setUser(e.data);
+          setUser_id(e.data.id);
         }
-      })    }
-  }, [loginStatus])
+      });
+      axios.get('expenses').then((e) => {
+        setUserExpenses([...e.data]);
+      });
+    }
+  }, [loginStatus]);
+  
 
   useEffect(() => {
     if(userExpenses.length > 0){
@@ -94,21 +97,29 @@ export default function Welcome ()  {
     }
   }, [userExpenses])
 
-  useEffect(() => {
-    axios.get('checkLogin')
-    .then((e) => {
-      if(e.data){
-        setLoginStatus(true)
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   if(loginStatus){
+  //     axios.get('user')
+  //     .then((e) => {
+  //       if(e.data){
+  //         let $currentUser = e.data
+  //         setUser($currentUser)
+  //         setUser_id($currentUser.id)
+  //       }
+  //     })    }
+  // }, [loginStatus])
 
   useEffect(() => {
-    axios.get('getCsrf')
-    .then((e) => {
-      axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
-    })
-  }, [loginStatus])
+    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
+  }, []);
+
+  useEffect(() => {
+    axios.get('checkLogin').then((e) => {
+      const isLoggedIn = e.data;
+      setLoginStatus(isLoggedIn);
+    });
+  }, []);
   
   return(
     <>
