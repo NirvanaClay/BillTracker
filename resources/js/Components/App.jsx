@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom/client';
 import axios from '../axiosConfig';
 import '../../Styles/navbar.css';
 import '../../Styles/login.css';
-import '../../Styles/register.css';
+import '../../Styles/register.css'
 import {Item} from '../Components/Item'
 
 function App({ users, email, setEmail, password, setPassword, setCsrfToken, user, user_id, setUser, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses, handleEdit, isEditing, setIsEditing, newExpenseName, setNewExpenseName, newExpenseAmount, setNewExpenseAmount }) {
