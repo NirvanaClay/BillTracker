@@ -1,6 +1,8 @@
 body{
   background: linear-gradient(to right, #0400ff, #00ccff);
-  font-family: Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .list{
