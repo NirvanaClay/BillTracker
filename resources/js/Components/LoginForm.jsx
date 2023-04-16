@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'r
 import {App} from '../Components/App'
 
 
-const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLoginStatus, user, setUser, setGuestExpenses }) => {
+const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLoginStatus, setGuestExpenses }) => {
 
   const [loginError, setLoginError] = useState('')
   const navigate = useNavigate()

@@ -59,6 +59,7 @@ body{
 
 .form-container form {
   display: flex;
+  flex-wrap: wrap; 
   justify-content: center;
   max-width: 100%;
   margin: 0 auto;
@@ -191,7 +192,16 @@ body{
   }
   .submit-btn{
     display: block;
+    /* width: 100%;  */
+    margin-left: 0; 
+    margin-top: 10px; 
   }
+  /* .form-container{
+    display: flex;
+  }
+  .submit-btn{
+    display: block;
+  } */
   h1 {
     font-size: 1.5rem;
   }
