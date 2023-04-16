@@ -9,9 +9,6 @@ import {App} from '../Components/App'
 const LoginForm = ({ email, setEmail, password, setPassword, setCsrfToken, setLoginStatus, user, setUser, setGuestExpenses }) => {
 
   const [loginError, setLoginError] = useState('')
-
-  // axios.defaults.withCredentials = true;
-
   const navigate = useNavigate()
 
   const handleLogin = async (e) => {

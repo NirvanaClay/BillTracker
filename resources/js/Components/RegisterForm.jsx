@@ -15,8 +15,6 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
     axios.post('register', {email, password, password_confirmation})
     .then((e) => {
       setCsrfToken(e.data)
-      axios.defaults.headers.common['X-CSRF-TOKEN'] = e.data;
-      document.head.querySelector('meta[name="csrf-token"]').content = e.data;
       setLoginStatus(true)
       navigate('/', { replace: true })
     })

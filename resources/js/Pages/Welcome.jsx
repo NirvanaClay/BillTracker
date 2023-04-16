@@ -7,7 +7,6 @@ import {App} from '../Components/App.jsx';
 import {RegisterForm} from '../Components/RegisterForm.jsx';
 import {LoginForm} from '../Components/LoginForm.jsx';
 import {PasswordReset} from '../Components/PasswordReset.jsx';
-import { Link, Head } from '@inertiajs/inertia-react';
 import {Navbar} from '../Components/Navbar.jsx';
 
 import '../App.css'
@@ -34,16 +33,6 @@ export default function Welcome ()  {
   const [hasExpenses, setHasExpenses] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [hasEdited, setHasEdited] = useState(false)
-
-  useEffect(() => {
-    if(loginStatus){
-      axios.get('expenses')
-      .then((e) => {
-        let expenseData = e.data
-        setUserExpenses([...expenseData])
-      })
-    }
-  }, [loginStatus])
 
   const handleDelete = ({ id }) => {
     if(loginStatus) {
@@ -96,11 +85,6 @@ export default function Welcome ()  {
       setHasExpenses(false)
     }
   }, [userExpenses])
-
-  // useEffect(() => {
-  //   const xsrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-  //   axios.defaults.headers.common['XSRF-TOKEN'] = csrfToken;
-  // }, []);
 
   useEffect(() => {
     axios.get('checkLogin').then((e) => {

@@ -8,16 +8,11 @@ li {
 }
 
 .fa-xmark {
-  /* height: 50px;
-  width: 50px;
-  object-fit: cover; */
   color: red;
   font-size: 16px;
 }
 
 button {
-  /* display: block;
-  width: 100%; */
   padding: 10px;
   background-color: #333;
   color: #fff;
