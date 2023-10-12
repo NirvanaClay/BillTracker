@@ -30,9 +30,15 @@ export default function Welcome ()  {
 
   const [guestExpenseId, setGuestExpenseId] = useState(1)
 
+  const [totalExpenses, setTotalExpenses] = useState(0)
   const [hasExpenses, setHasExpenses] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [hasEdited, setHasEdited] = useState(false)
+
+  useEffect(() => {
+    console.log("totalExpenses are:")
+    console.log(totalExpenses)
+  }, [totalExpenses])
 
   const handleDelete = ({ id }) => {
     if(loginStatus) {
@@ -98,9 +104,9 @@ export default function Welcome ()  {
       <Switch>
         {loginStatus ? '' : <Navbar />}
         <Routes>
-          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user_id={user_id} setCsrfToken={setCsrfToken} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} newExpenseName={newExpenseName} setNewExpenseName={setNewExpenseName} newExpenseAmount={newExpenseAmount} setNewExpenseAmount={setNewExpenseAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} />} />
+          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user_id={user_id} setCsrfToken={setCsrfToken} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} newExpenseName={newExpenseName} setNewExpenseName={setNewExpenseName} newExpenseAmount={newExpenseAmount} setNewExpenseAmount={setNewExpenseAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} />} />
 
-          <Route path="/register" element={<RegisterForm setLoginStatus={setLoginStatus} email={email} setEmail={setEmail} password={password} setPassword={setPassword} password_confirmation={password_confirmation} setPasswordConfirmation={setPasswordConfirmation} setCsrfToken={setCsrfToken} />} />
+          <Route path="/register" element={<RegisterForm setLoginStatus={setLoginStatus} email={email} setEmail={setEmail} password={password} setPassword={setPassword} password_confirmation={password_confirmation} setPasswordConfirmation={setPasswordConfirmation} setCsrfToken={setCsrfToken} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} setUserExpenses={setUserExpenses} setGuestExpenses={setGuestExpenses} />} />
 
           <Route path="/login" element={<LoginForm setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} setGuestExpenses={setGuestExpenses} />} />
 

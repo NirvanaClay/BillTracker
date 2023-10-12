@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'r
 
 import axios from '../axiosConfig';
 
-const RegisterForm = ({ email, setEmail, password, setPassword, password_confirmation, setPasswordConfirmation, setCsrfToken, setLoginStatus }) => {
+const RegisterForm = ({ email, setEmail, password, setPassword, password_confirmation, setPasswordConfirmation, setCsrfToken, setLoginStatus, totalExpenses, setTotalExpenses, setUserExpenses, setGuestExpenses }) => {
 
   const navigate = useNavigate()
 
@@ -13,12 +13,19 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
     e.preventDefault();
 
     axios.post('register', {email, password, password_confirmation})
-    .then((e) => {
-      setCsrfToken(e.data)
+    .then((response) => {
+      console.log("response.data for register route is:")
+      console.log(response.data)
+      setCsrfToken(response.data)
       setLoginStatus(true)
+      setUserExpenses([]); 
+      setGuestExpenses([]);
+      setTotalExpenses(0)
       navigate('/', { replace: true })
     })
     .catch((e) => {
+      console.log("In catch function, e is:")
+      console.log(e)
       setRegisterErrors(Object.values(e.response.data.errors).flat());
     })
   }
