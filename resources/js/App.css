@@ -214,10 +214,14 @@ body{
   .form-container{
     display: block;
   }
-  .newExpense-text{
+  .addExpense-form .newExpense-text{
     width: 100%;
   }
-  .item-amount{
+  /* .addExpense-form .amount-container{
+    width: 100%;
+  } */
+  .addExpense-form .amount-container .item-price{
+    display: block;
     width: 100%;
     margin-top: 10px;
   }
