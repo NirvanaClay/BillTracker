@@ -14,8 +14,6 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
 
     axios.post('register', {email, password, password_confirmation})
     .then((response) => {
-      console.log("response.data for register route is:")
-      console.log(response.data)
       setCsrfToken(response.data)
       setLoginStatus(true)
       setUserExpenses([]); 
@@ -24,8 +22,7 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
       navigate('/', { replace: true })
     })
     .catch((e) => {
-      console.log("In catch function, e is:")
-      console.log(e)
+      console.error(e);
       setRegisterErrors(Object.values(e.response.data.errors).flat());
     })
   }

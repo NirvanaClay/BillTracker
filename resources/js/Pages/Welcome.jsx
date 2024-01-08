@@ -35,11 +35,6 @@ export default function Welcome ()  {
   const [isEditing, setIsEditing] = useState(false)
   const [hasEdited, setHasEdited] = useState(false)
 
-  useEffect(() => {
-    console.log("totalExpenses are:")
-    console.log(totalExpenses)
-  }, [totalExpenses])
-
   const handleDelete = ({ id }) => {
     if(loginStatus) {
       axios.delete(`expenses/${id}`)
