@@ -111,7 +111,7 @@ function App({ setCsrfToken, user_id, loginStatus, setLoginStatus, guestExpenses
     <div className='list'>
       {loginStatus ? <h1>My Expenses</h1> : <h1>Expense Tracker</h1>}
       <p className='app-description'>
-        Gain clarity by keeping track of your monthly expenses.  
+        Gain clarity by keeping track of your monthly expenseszzzz.  
       </p>
       {!loginStatus && 
       <p className='guest-message'><Link to='/login'>Login</Link> or <Link to='/register'>Register</Link> to save your expenses.</p>}
