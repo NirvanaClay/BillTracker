@@ -27,7 +27,8 @@ import {Item} from '../Components/Item'
     setNewExpenseAmount(e.target.value)
   }
 
-  const addItem = () => {
+  const addItem = (e) => {
+    e.preventDefault();
     if (!newExpenseName || !newExpenseAmount) {
       setFormError("Both text and amount fields are required.");
       return;
@@ -74,13 +75,6 @@ import {Item} from '../Components/Item'
     })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newExpenseName !== "" && newExpenseAmount !== "") {
-      addItem();
-    }
-  }
-
   useEffect(() => {
     let total=0
     if(userExpenses.length > 0){
@@ -109,11 +103,11 @@ import {Item} from '../Components/Item'
       {hasExpenses ? (
         loginStatus ? (
           userExpenses.map((userExpense, index) => (
-            <Item key={index} id={userExpense.id} text={userExpense.name} amount={userExpense.amount} loginStatus={loginStatus} userExpenses={userExpenses} setUserExpenses={setUserExpenses} handleDelete={handleDelete} handleEdit={handleEdit} handleSubmit={handleSubmit} handleAmountChange={handleAmountChange} handleNameChange={handleNameChange} nameInputRef={nameInputRef} formatExpenseName={formatExpenseName} isEditing={isEditing} setIsEditing={setIsEditing} />
+            <Item key={index} id={userExpense.id} text={userExpense.name} amount={userExpense.amount} loginStatus={loginStatus} userExpenses={userExpenses} setUserExpenses={setUserExpenses} handleDelete={handleDelete} handleEdit={handleEdit} handleAmountChange={handleAmountChange} handleNameChange={handleNameChange} nameInputRef={nameInputRef} formatExpenseName={formatExpenseName} isEditing={isEditing} setIsEditing={setIsEditing} />
           ))
         ) : (
           guestExpenses.map((guestExpense, index) => (
-            <Item key={index} id={guestExpense.id} text={guestExpense.name} amount={guestExpense.amount} loginStatus={loginStatus} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} handleEdit={handleEdit}handleSubmit={handleSubmit} handleAmountChange={handleAmountChange} handleNameChange={handleNameChange} nameInputRef={nameInputRef} formatExpenseName={formatExpenseName} isEditing={isEditing} setIsEditing={setIsEditing} />
+            <Item key={index} id={guestExpense.id} text={guestExpense.name} amount={guestExpense.amount} loginStatus={loginStatus} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} handleEdit={handleEdit} handleAmountChange={handleAmountChange} handleNameChange={handleNameChange} nameInputRef={nameInputRef} formatExpenseName={formatExpenseName} isEditing={isEditing} setIsEditing={setIsEditing} />
           ))
         )
       ) : null}
@@ -121,7 +115,7 @@ import {Item} from '../Components/Item'
         {(userExpenses.length > 0 || guestExpenses.length > 0) && <p className='total-expenses'>Total Expenses: {totalExpenses}</p>}
       </ul>
       <div className='form-container'>
-        <form className='addExpense-form' onSubmit={handleSubmit}>
+        <form className='addExpense-form' onSubmit={addItem}>
           <input
             ref={nameInputRef}
             className='newExpense-text'

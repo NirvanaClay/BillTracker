@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Item({ id, text, imgUrl, amount, loginStatus, userExpenses, setUserExpenses, guestExpenses, setGuestExpenses, handleDelete, handleEdit, handleAmountChange, handleSubmit, handleNameChange, nameInputRef, formatExpenseName, isEditing, setIsEditing }) {
+function Item({ id, text, imgUrl, amount, loginStatus, userExpenses, setUserExpenses, guestExpenses, setGuestExpenses, handleDelete, handleEdit, handleAmountChange, handleNameChange, nameInputRef, formatExpenseName, isEditing, setIsEditing }) {
 
   const [editName, setEditName] = useState(text)
   const [editAmount, setEditAmount] = useState(amount)
