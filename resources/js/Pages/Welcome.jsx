@@ -33,7 +33,6 @@ export default function Welcome ()  {
   const [totalExpenses, setTotalExpenses] = useState(0)
   const [hasExpenses, setHasExpenses] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
-  const [hasEdited, setHasEdited] = useState(false)
 
   //Effects
   useEffect(() => {
@@ -92,7 +91,6 @@ export default function Welcome ()  {
     setNewExpenseName('')
     setNewExpenseAmount('')
     setIsEditing(false)
-    setHasEdited(true)
   }
   
   return(
