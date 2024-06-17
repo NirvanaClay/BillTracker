@@ -8,9 +8,27 @@ import '../../Styles/register.css'
 import {Item} from '../Components/Item'
 
   function App({ user_id, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses, handleEdit, isEditing, setIsEditing, newExpenseName, setNewExpenseName, newExpenseAmount, setNewExpenseAmount, totalExpenses, setTotalExpenses }) {
+
   const nameInputRef = useRef(null);
   const [formError, setFormError] = useState(null);
   const navigate = useNavigate()
+
+  //Effects
+  useEffect(() => {
+    let total=0
+    if(userExpenses.length > 0){
+      for(let expense of userExpenses){
+        total += Number(expense.amount)
+      }
+    }
+    else if(guestExpenses.length > 0){
+      for(let expense of guestExpenses){
+        total += Number(expense.amount)
+      }
+    }
+    total = total.toFixed(2)
+    setTotalExpenses(total)
+  }, [userExpenses, guestExpenses])
 
   const formatExpenseName = (expense) => {
     expense = expense.replace(/^\s+/g, '');
@@ -74,22 +92,6 @@ import {Item} from '../Components/Item'
       navigate('/', { replace: true });
     })
   }
-
-  useEffect(() => {
-    let total=0
-    if(userExpenses.length > 0){
-      for(let expense of userExpenses){
-        total += Number(expense.amount)
-      }
-    }
-    else if(guestExpenses.length > 0){
-      for(let expense of guestExpenses){
-        total += Number(expense.amount)
-      }
-    }
-    total = total.toFixed(2)
-    setTotalExpenses(total)
-  }, [userExpenses, guestExpenses])
 
   return (
     <div className='list'>
