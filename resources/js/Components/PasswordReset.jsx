@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import axios from '../axiosConfig';
-import Cookies from 'js-cookie';
-import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'react-router-dom';
-
-import {App} from '../Components/App'
+import { useNavigate } from 'react-router-dom';
 
 
-const PasswordReset = ({ email, setEmail, password, setPassword, setLoginStatus, user, setUser, setGuestExpenses }) => {
+const PasswordReset = ({ email, setEmail, password, setPassword }) => {
 
   const [loginError, setLoginError] = useState('')
 
@@ -58,7 +55,6 @@ const PasswordReset = ({ email, setEmail, password, setPassword, setLoginStatus,
             ))}
           </ul>
         )}
-        {/* // {registerError && <p className='register-error'>*{registerError}</p>} */}
         <button type="submit">Register</button>
       </form>
     </div>
