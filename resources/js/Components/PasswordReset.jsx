@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'r
 import {App} from '../Components/App'
 
 
-const PasswordReset = ({ email, setEmail, password, setPassword, setCsrfToken, setLoginStatus, user, setUser, setGuestExpenses }) => {
+const PasswordReset = ({ email, setEmail, password, setPassword, setLoginStatus, user, setUser, setGuestExpenses }) => {
 
   const [loginError, setLoginError] = useState('')
 

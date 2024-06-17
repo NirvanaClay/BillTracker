@@ -16,13 +16,13 @@ import '../../Styles/item.css';
 
 
 export default function Welcome ()  {
+  //State Variables
   const [loginStatus, setLoginStatus] = useState(false)
   const [user, setUser] = useState()
   const [user_id, setUser_id] = useState()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password_confirmation, setPasswordConfirmation] = useState('');
-  const [csrfToken, setCsrfToken] = useState('')
   const [userExpenses, setUserExpenses] = useState([])
   const [guestExpenses, setGuestExpenses] = useState([])
   const [newExpenseName, setNewExpenseName] = useState('')
@@ -34,6 +34,38 @@ export default function Welcome ()  {
   const [hasExpenses, setHasExpenses] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [hasEdited, setHasEdited] = useState(false)
+
+  //Effects
+  useEffect(() => {
+    axios.get('checkLogin').then((e) => {
+      const isLoggedIn = e.data;
+      setLoginStatus(isLoggedIn);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (loginStatus) {
+      axios.get('user').then((e) => {
+        if (e.data) {
+          setUser(e.data);
+          setUser_id(e.data.id);
+        }
+      });
+      axios.get('expenses').then((e) => {
+        setUserExpenses([...e.data]);
+      });
+    }
+  }, [loginStatus]);
+  
+
+  useEffect(() => {
+    if(userExpenses.length > 0){
+      setHasExpenses(true)
+    }
+    else{
+      setHasExpenses(false)
+    }
+  }, [userExpenses])
 
   const handleDelete = ({ id }) => {
     if(loginStatus) {
@@ -62,50 +94,19 @@ export default function Welcome ()  {
     setIsEditing(false)
     setHasEdited(true)
   }
-
-  useEffect(() => {
-    if (loginStatus) {
-      axios.get('user').then((e) => {
-        if (e.data) {
-          setUser(e.data);
-          setUser_id(e.data.id);
-        }
-      });
-      axios.get('expenses').then((e) => {
-        setUserExpenses([...e.data]);
-      });
-    }
-  }, [loginStatus]);
-  
-
-  useEffect(() => {
-    if(userExpenses.length > 0){
-      setHasExpenses(true)
-    }
-    else{
-      setHasExpenses(false)
-    }
-  }, [userExpenses])
-
-  useEffect(() => {
-    axios.get('checkLogin').then((e) => {
-      const isLoggedIn = e.data;
-      setLoginStatus(isLoggedIn);
-    });
-  }, []);
   
   return(
     <>
       <Switch>
         {loginStatus ? '' : <Navbar />}
         <Routes>
-          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user_id={user_id} setCsrfToken={setCsrfToken} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} newExpenseName={newExpenseName} setNewExpenseName={setNewExpenseName} newExpenseAmount={newExpenseAmount} setNewExpenseAmount={setNewExpenseAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} />} />
+          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user_id={user_id} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} newExpenseName={newExpenseName} setNewExpenseName={setNewExpenseName} newExpenseAmount={newExpenseAmount} setNewExpenseAmount={setNewExpenseAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} />} />
 
-          <Route path="/register" element={<RegisterForm setLoginStatus={setLoginStatus} email={email} setEmail={setEmail} password={password} setPassword={setPassword} password_confirmation={password_confirmation} setPasswordConfirmation={setPasswordConfirmation} setCsrfToken={setCsrfToken} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} setUserExpenses={setUserExpenses} setGuestExpenses={setGuestExpenses} />} />
+          <Route path="/register" element={<RegisterForm setLoginStatus={setLoginStatus} email={email} setEmail={setEmail} password={password} setPassword={setPassword} password_confirmation={password_confirmation} setPasswordConfirmation={setPasswordConfirmation} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} setUserExpenses={setUserExpenses} setGuestExpenses={setGuestExpenses} />} />
 
-          <Route path="/login" element={<LoginForm setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} setGuestExpenses={setGuestExpenses} />} />
+          <Route path="/login" element={<LoginForm setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setGuestExpenses={setGuestExpenses} />} />
 
-          <Route path="/password-reset" element={<PasswordReset setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setCsrfToken={setCsrfToken} setGuestExpenses={setGuestExpenses} />} />
+          <Route path="/password-reset" element={<PasswordReset setLoginStatus={setLoginStatus} user={user} setUser={setUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} setGuestExpenses={setGuestExpenses} />} />
         </Routes>
       </Switch>
     </>

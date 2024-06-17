@@ -8,10 +8,6 @@ function MyButton() {
 
   return (
     <FontAwesomeIcon icon={faXmark} />
-    // <i class="fas fa-xmark"></i>
-  //   <button onClick={() => setButtonText('Clicked')}>
-  //     {buttonText}
-  //   </button>
   );
 }
 

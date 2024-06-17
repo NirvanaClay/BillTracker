@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, redirect, useNavigate } from 'r
 
 import axios from '../axiosConfig';
 
-const RegisterForm = ({ email, setEmail, password, setPassword, password_confirmation, setPasswordConfirmation, setCsrfToken, setLoginStatus, totalExpenses, setTotalExpenses, setUserExpenses, setGuestExpenses }) => {
+const RegisterForm = ({ email, setEmail, password, setPassword, password_confirmation, setPasswordConfirmation, setLoginStatus, totalExpenses, setTotalExpenses, setUserExpenses, setGuestExpenses }) => {
 
   const navigate = useNavigate()
 
@@ -14,7 +14,6 @@ const RegisterForm = ({ email, setEmail, password, setPassword, password_confirm
 
     axios.post('register', {email, password, password_confirmation})
     .then((response) => {
-      setCsrfToken(response.data)
       setLoginStatus(true)
       setUserExpenses([]); 
       setGuestExpenses([]);

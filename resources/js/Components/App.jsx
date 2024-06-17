@@ -7,17 +7,12 @@ import '../../Styles/login.css';
 import '../../Styles/register.css'
 import {Item} from '../Components/Item'
 
-function App({ setCsrfToken, user_id, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses, handleEdit, isEditing, setIsEditing, newExpenseName, setNewExpenseName, newExpenseAmount, setNewExpenseAmount, totalExpenses, setTotalExpenses }) {
+  function App({ user_id, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses, handleEdit, isEditing, setIsEditing, newExpenseName, setNewExpenseName, newExpenseAmount, setNewExpenseAmount, totalExpenses, setTotalExpenses }) {
   const nameInputRef = useRef(null);
   const [formError, setFormError] = useState(null);
   const navigate = useNavigate()
 
   const formatExpenseName = (expense) => {
-    // expense = expense.replace(/\s+/g, ' ').trim();
-    // expense = expense.toLowerCase()
-    // .split(' ')
-    // .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-    // .join(' ');
     expense = expense.replace(/^\s+/g, '');
     expense = expense.replace(/\s+/g, ' ');
     return expense
@@ -25,8 +20,7 @@ function App({ setCsrfToken, user_id, loginStatus, setLoginStatus, guestExpenses
 
   const handleNameChange = (e) => {
     const expense = e;
-    // setNewExpenseName(formatExpenseName(expense))
-    setNewExpenseName(e)
+    setNewExpenseName(expense)
   };
 
   const handleAmountChange = (e) => {
@@ -72,12 +66,8 @@ function App({ setCsrfToken, user_id, loginStatus, setLoginStatus, guestExpenses
   const handleLogout = async (e) => {
     e.preventDefault()
     axios.post('logout')
-    // .then(() => {
-    //   return axios.get('csrf-token')
-    // })
     .then((e) => {
       setLoginStatus(false)
-      setCsrfToken(e.data)
       setUserExpenses([])
       setGuestExpenses([])
       navigate('/', { replace: true });
