@@ -31,7 +31,6 @@ export default function Welcome ()  {
   const [guestExpenseId, setGuestExpenseId] = useState(1)
 
   const [totalExpenses, setTotalExpenses] = useState(0)
-  const [hasExpenses, setHasExpenses] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
   //Effects
@@ -55,16 +54,6 @@ export default function Welcome ()  {
       });
     }
   }, [loginStatus]);
-  
-
-  useEffect(() => {
-    if(userExpenses.length > 0){
-      setHasExpenses(true)
-    }
-    else{
-      setHasExpenses(false)
-    }
-  }, [userExpenses])
 
   const handleDelete = ({ id }) => {
     if(loginStatus) {
@@ -98,7 +87,7 @@ export default function Welcome ()  {
       <Switch>
         {loginStatus ? '' : <Navbar />}
         <Routes>
-          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user_id={user_id} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} newExpenseName={newExpenseName} setNewExpenseName={setNewExpenseName} newExpenseAmount={newExpenseAmount} setNewExpenseAmount={setNewExpenseAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} hasExpenses={hasExpenses} setHasExpenses={setHasExpenses} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} />} />
+          <Route exact path="/" element={<App loginStatus={loginStatus} setLoginStatus={setLoginStatus} user_id={user_id} userExpenses={userExpenses} setUserExpenses={setUserExpenses} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} newExpenseName={newExpenseName} setNewExpenseName={setNewExpenseName} newExpenseAmount={newExpenseAmount} setNewExpenseAmount={setNewExpenseAmount} guestExpenseId={guestExpenseId} setGuestExpenseId={setGuestExpenseId} handleEdit={handleEdit} isEditing={isEditing} setIsEditing={setIsEditing} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} />} />
 
           <Route path="/register" element={<RegisterForm setLoginStatus={setLoginStatus} email={email} setEmail={setEmail} password={password} setPassword={setPassword} password_confirmation={password_confirmation} setPasswordConfirmation={setPasswordConfirmation} totalExpenses={totalExpenses} setTotalExpenses={setTotalExpenses} setUserExpenses={setUserExpenses} setGuestExpenses={setGuestExpenses} />} />
 
