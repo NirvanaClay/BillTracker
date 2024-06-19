@@ -25,6 +25,8 @@ use App\Models\Expense;
 |
 */
 
+require __DIR__.'/auth.php';
+
 Route::get('/', function() {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -32,29 +34,6 @@ Route::get('/', function() {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
-
-Route::post('/register', function(Request $request)
-{
-    $request->validate([
-        'email' => 'required|string|email|max:255|unique:'.User::class.'|regex:/^[\w.+-]+@[\w-]+\.[a-z]+$/i',
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    ]);
-
-    $user = User::create([
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-    ]);
-
-    event(new Registered($user));
-    $request->session()->regenerate();
-    Auth::login($user);
-    $csrfToken = csrf_token();
-    return $csrfToken;
-});
-
-Route::get('/checkLogin', function() {
-    return Auth::check();
 });
 
 Route::post('/addExpense', function(Request $request) {
@@ -89,55 +68,23 @@ Route::put('/expenses/{id}', function(Request $request) {
     return $expense;
 });
 
-Route::post('/login', function(Request $request){
-    $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
-    ]);
-
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-        $csrfToken = csrf_token();
-        return $csrfToken;
-    }
-    return response('The provided credentials do not match our records.', 401);
-});
-
-Route::get('/user', function (Request $request) {
-    if(Auth::check()){
-        $user = Auth::user();
-        return $user;
-    }
-    else{
-        return false;
-    }
-})->middleware('auth');
-
-Route::post('/logout', function(Request $request) {
-    Auth::logout();
-
-    $request->session()->invalidate();
-
-    $request->session()->regenerateToken();
-});
-
-Route::post('/forgot-password', function (Request $request) {
-    $request->validate(['email' => 'required|email']);
+// Route::post('/forgot-password', function (Request $request) {
+//     $request->validate(['email' => 'required|email']);
  
-    $status = Password::sendResetLink(
-        $request->only('email')
-    );
+//     $status = Password::sendResetLink(
+//         $request->only('email')
+//     );
  
-    return $status === Password::RESET_LINK_SENT
-                ? back()->with(['status' => __($status)])
-                : back()->withErrors(['email' => __($status)]);
-})->middleware('guest')->name('password.email');
+//     return $status === Password::RESET_LINK_SENT
+//                 ? back()->with(['status' => __($status)])
+//                 : back()->withErrors(['email' => __($status)]);
+// })->middleware('guest')->name('password.email');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 Route::get('{any}', function () {
     return Inertia::render('Welcome', [
@@ -147,5 +94,3 @@ Route::get('{any}', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
-require __DIR__.'/auth.php';
