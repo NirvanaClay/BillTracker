@@ -7,8 +7,7 @@ import '../../Styles/login.css';
 import '../../Styles/register.css'
 import {Item} from '../Components/Item'
 
-  function App({ user_id, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, hasExpenses, setHasExpenses, handleEdit, isEditing, setIsEditing, newExpenseName, setNewExpenseName, newExpenseAmount, setNewExpenseAmount, totalExpenses, setTotalExpenses }) {
-
+  function App({ user_id, loginStatus, setLoginStatus, guestExpenses, setGuestExpenses, userExpenses, setUserExpenses, handleDelete, guestExpenseId, setGuestExpenseId, handleEdit, isEditing, setIsEditing, newExpenseName, setNewExpenseName, newExpenseAmount, setNewExpenseAmount, totalExpenses, setTotalExpenses }) {
   const nameInputRef = useRef(null);
   const [formError, setFormError] = useState(null);
   const navigate = useNavigate()
@@ -75,7 +74,6 @@ import {Item} from '../Components/Item'
       ]);
       setGuestExpenseId((guestExpenseId + 1))
     }
-    setHasExpenses(true)
     setNewExpenseName("");
     setNewExpenseAmount("");
     setFormError(null);
@@ -102,17 +100,16 @@ import {Item} from '../Components/Item'
       {!loginStatus && 
       <p className='guest-message'><Link to='/login'>Login</Link> or <Link to='/register'>Register</Link> to save your expenses.</p>}
       <ul className={`items-container ${(userExpenses.length == 0 && guestExpenses.length == 0) && 'no-expenses'}`}>
-      {hasExpenses ? (
-        loginStatus ? (
-          userExpenses.map((userExpense, index) => (
+        {loginStatus ? (
+          userExpenses.length > 0 && userExpenses.map((userExpense, index) => (
             <Item key={index} id={userExpense.id} text={userExpense.name} amount={userExpense.amount} loginStatus={loginStatus} userExpenses={userExpenses} setUserExpenses={setUserExpenses} handleDelete={handleDelete} handleEdit={handleEdit} handleAmountChange={handleAmountChange} handleNameChange={handleNameChange} nameInputRef={nameInputRef} formatExpenseName={formatExpenseName} isEditing={isEditing} setIsEditing={setIsEditing} />
-          ))
-        ) : (
-          guestExpenses.map((guestExpense, index) => (
+          )))
+          : (
+          guestExpenses.length > 0 && guestExpenses.map((guestExpense, index) => (
             <Item key={index} id={guestExpense.id} text={guestExpense.name} amount={guestExpense.amount} loginStatus={loginStatus} guestExpenses={guestExpenses} setGuestExpenses={setGuestExpenses} handleDelete={handleDelete} handleEdit={handleEdit} handleAmountChange={handleAmountChange} handleNameChange={handleNameChange} nameInputRef={nameInputRef} formatExpenseName={formatExpenseName} isEditing={isEditing} setIsEditing={setIsEditing} />
           ))
         )
-      ) : null}
+  }
 
         {(userExpenses.length > 0 || guestExpenses.length > 0) && <p className='total-expenses'>Total Expenses: {totalExpenses}</p>}
       </ul>
