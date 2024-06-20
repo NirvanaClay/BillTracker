@@ -13,6 +13,8 @@ import {Item} from '../Components/Item'
   const navigate = useNavigate()
 
   //Effects
+
+  //Get total cost of expenses
   useEffect(() => {
     let total=0
     if(userExpenses.length > 0){
